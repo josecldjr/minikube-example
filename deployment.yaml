@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nginx
+
+# deployment specification
+spec:
+  selector:
+    matchLabels:
+      app: hello-nginx
+  replicas: 2
+  template:
+    # info about the template
+    metadata:
+      labels:
+        app: hello-nginx
+    # Pod specification
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          # setting resources limit 
+          # resources:
+          #     requests:
+          #       memory: "100Mi"
+          #       cpu: "500m"
+          #     limits:
+          #       memory: "3Gi"
+          #       cpu: "500m"                
+          # volumes that will be mount
+          volumeMounts:
+            - mountPath: "/etc/nginx/conf.d"
+              readOnly: true
+              name: nginx-conf
+
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-server
+# deployment specification
+spec:
+  replicas: 1
+  # template configuration (it refers to the POD)
+
+  selector: # selector used for server creation
+    matchLabels: 
+      app: mysql-server
+      tier: db
+
+  template:
+    metadata:
+      # labels for the template ( they are customized)
+      labels:
+        app: mysql-server
+        tier: db
+    spec:
+      containers:
+        - image:  mysql:5.7
+          name: mysql-server 
+          args:
+            - "--ignore-db-dir=lost+found"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: mysql-pass
+                key: password
+          ports:
+          - containerPort: 3306
+          volumeMounts:
+            - name:  mysql-persistent-storage
+              mountPath: /var/lib/myqsl
+      volumes: # definição de volume
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+
+
