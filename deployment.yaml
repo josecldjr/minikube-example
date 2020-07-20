@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: hello-nginx
-  replicas: 2
+  replicas: 3 
   template:
     # info about the template
     metadata:
@@ -18,17 +18,17 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx
+          image: nginx:1.19.1-alpine
           ports:
             - containerPort: 80
           # setting resources limit 
-          # resources:
-          #     requests:
-          #       memory: "100Mi"
-          #       cpu: "500m"
-          #     limits:
-          #       memory: "3Gi"
-          #       cpu: "500m"                
+          resources:
+              requests:
+                memory: "300Mi"
+                cpu: "150m"
+              limits:
+                memory: "2Gi"
+                cpu: "350m"                
           # volumes that will be mount
           volumeMounts:
             - mountPath: "/etc/nginx/conf.d"

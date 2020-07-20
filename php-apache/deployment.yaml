@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-apach-hpa
+
+spec:
+  selector:
+    matchLabels:
+      name: php-apache-hpa
+  template:
+    metadata:
+      labels:
+        name: php-apache-hpa
+    spec:
+      containers:
+        - name: php-apache-hpa
+          image: josecjr/php-apache-hpa-test
+          ports:
+           - containerPort: 80
+          resources:
+            requests:
+              cpu: "200m"
