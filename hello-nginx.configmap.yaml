@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-hello
+data:
+  index.html: |
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hello Nginx (configmap)</title>
+    </head>
+    <body>
+        <h1> Code Education Rocks! </h1>
+    </body>
+    </html>
