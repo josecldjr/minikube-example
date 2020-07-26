@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-greetings
+
+# deployment specification
+spec:
+  selector:
+    matchLabels:
+      app: golang-greetings
+  replicas: 3
+  template:
+    # info about the template
+    metadata:
+      labels:
+        app: golang-greetings
+    # Pod specification
+    spec:
+      containers:
+        - name: golang-greetings
+          image: josecjr/golanggreeting
+          ports:
+            - containerPort: 8000
+        
